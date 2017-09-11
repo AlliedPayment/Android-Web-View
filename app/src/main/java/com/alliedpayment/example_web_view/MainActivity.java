@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         mWebView = new WebView(this);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("https://billpay.alliedpayment.com");
+        mWebView.loadUrl("https://billpay.demo.alliedpayment.com");
         mWebView.setWebViewClient(new WebViewClient() {
             @SuppressWarnings("deprecation")
             @Override
