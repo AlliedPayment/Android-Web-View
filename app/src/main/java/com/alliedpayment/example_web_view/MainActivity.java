@@ -1,57 +1,35 @@
 package com.alliedpayment.example_web_view;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.webkit.URLUtil;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private WebView mWebView;
+    public static final String WEB_VIEW_URL = "com.allied_payment.example_web_view.URL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mWebView = new WebView(this);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("https://billpay.demo.alliedpayment.com");
-        mWebView.setWebViewClient(new WebViewClient() {
-            @SuppressWarnings("deprecation")
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                final Uri uri = Uri.parse(url);
-                return handleUri(uri);
-            }
+        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.autocomplete_urls);
+        String[] countries = getResources().getStringArray(R.array.example_urls_array);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, countries);
+        textView.setAdapter(adapter);
+    }
 
-            @TargetApi(Build.VERSION_CODES.N)
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                final Uri uri = request.getUrl();
-                return handleUri(uri);
-            }
-
-            private boolean handleUri(final Uri uri) {
-                if (URLUtil.isNetworkUrl(uri.toString()) && !uri.toString().contains("raw")) {
-                    // Returning false means that you are going to load this url in the webView itself
-                    return false;
-                } else {
-                    final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                    return true;
-                }
-            }
-        });
-
-        this.setContentView(mWebView);
+    public void launchWebView(View view) {
+        Intent intent = new Intent(this, WebViewActivity.class);
+        EditText editText = (EditText) findViewById(R.id.autocomplete_urls);
+        String message = editText.getText().toString();
+        intent.putExtra(WEB_VIEW_URL, message);
+        startActivity(intent);
     }
 }

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Allied Web View</string>
+
+    <string-array name="example_urls_array">
+        <item>billpay.alliedpayment.com</item>
+        <item>billpay.demo.alliedpayment.com</item>
+        <item>billpay.mock.alliedpayment.com</item>
+        <item>billpay.final.alliedpaymentnetwork.com</item>
+    </string-array>
 </resources>
