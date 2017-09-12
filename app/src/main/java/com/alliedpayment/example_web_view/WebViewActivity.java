@@ -79,7 +79,8 @@ public class WebViewActivity extends AppCompatActivity {
         }
         else if(url.contains("mock")) {
             return "Mock";
-        } else if(url.contains("demo")) {
+        }
+        else if(url.contains("demo")) {
             return "Demo";
         }
         else {
